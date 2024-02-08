@@ -6,7 +6,9 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       <div class="navbar-nav">
-        <a class="nav-link active" aria-current="page" href="{{ route('posts_listados') }}">Listado de Posts</a>
+        <a class="nav-link active" aria-current="page" href="{{ route('posts.index') }}">Listado de Posts</a>
+        <a class="nav-link active" aria-current="page" href="{{ route('posts.edit', 1) }}">Editar Posts</a>
+        <a class="nav-link active" aria-current="page" href="{{ route('posts.create') }}">Crear Posts</a>
       </div>
     </div>
   </div>

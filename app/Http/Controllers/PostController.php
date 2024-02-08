@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Post;
+
 
 class PostController extends Controller
 {
@@ -11,7 +13,9 @@ class PostController extends Controller
      */
     public function index()
     {
-        //
+        $posts = Post::paginate(5);
+        $odenados = $posts->sortBy('titulo');
+        return view('index', compact('posts','odenados'));
     }
 
     /**
@@ -19,7 +23,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        return redirect()->route("inicio");
     }
 
     /**
@@ -35,7 +39,11 @@ class PostController extends Controller
      */
     public function show(string $id)
     {
-        //
+        if (!is_numeric($id) || intval($id) != $id) {
+            abort(404,"ID no es valido");
+        }
+        $post = Post::find($id);
+        return view('show',compact('post'));
     }
 
     /**
@@ -43,7 +51,7 @@ class PostController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        return redirect()->route("inicio");
     }
 
     /**
@@ -59,6 +67,7 @@ class PostController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        Post::findOrFail($id)->delete();
+        return redirect()->route("posts.index");
     }
 }
