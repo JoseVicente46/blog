@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Post;
+use App\Models\Usuario;
 
 
 class PostController extends Controller
@@ -23,7 +24,8 @@ class PostController extends Controller
      */
     public function create()
     {
-        return redirect()->route("inicio");
+        $usuarios = Usuario::get();
+        return view('creacion', compact('usuarios'));
     }
 
     /**
@@ -31,7 +33,12 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $post = new Post();
+        $post->id_usuario = $request->get('usuario');
+        $post->titulo = $request->get('titulo');
+        $post->contenido = $request->get('contenido');
+        $post->save();
+        return redirect()->route("posts.index");
     }
 
     /**
